@@ -1,4 +1,4 @@
-# Deep_RL_diagnosis_pathways
+# DRL_anemia_diagnostic_pathways
 This folder contains code for generating anemia diagnostic pathways for patients using DQN models.
 
 #### Local Setup using a Python virtual environment
