@@ -34,35 +34,23 @@ if __name__== "__main__":
     print(f'Seed being used: {constants.SEED}')
     print(f'Number of steps: {args.steps}')
 
-
-    train_df = pd.read_csv('../data/final_dataset/new/60_20_20/train_set.csv') # to change
+    try:
+        train_df = pd.read_csv('../data/rwd_dataset/train_set.csv') 
+    except:
+        print("Dataset not publicly available. Swith path to synthetic dataset to test script.")
     train_df = train_df.fillna(-1)
 
     X_train = train_df.iloc[:, 0:-1]
     y_train = train_df.iloc[:, -1]
     X_train, y_train = np.array(X_train), np.array(y_train) 
 
-    model_names = ["dueling_dqn_per", "dueling_ddqn_per"]
-    # model_name = "dueling_ddqn_per"
-    # model_path = f"../models/pretrained_models/new/{model_name}.zip"
-    # parent_dir = f"../models/finetuned/new/no_step_reward/{model_name}"
-    # utils.train_dqn_model(args.steps, model_path, X_train, y_train, constants.SEED, parent_dir, model_name, model_name)
-
-    
-    procs = []
-
-    for name in model_names:
-        model_path = f"../models/pretrained_models/new_new/no_step_reward/{name}/{args.metric}_f1_model.zip"
-        parent_dir = f"../models/finetuned/new_new/60_20_20/no_step_reward/{name}/{args.metric}"
-        proc = Process(target=utils.train_dqn_model, args=(args.steps, model_path, X_train, y_train, constants.SEED, parent_dir, name, name))
-        procs.append(proc)
-        proc.start()
-
-    for proc in procs:
-        proc.join()
+   
+    model_path = f"../models/synthetic_trained_model.zip.zip"
+    parent_dir = f"../models/finetuned"
+    utils.train_dqn_model(args.steps, model_path, X_train, y_train, constants.SEED, parent_dir, "finetuned")
 
 
-    print('All jobs completed')
+    print('DONE!')
 
    
 

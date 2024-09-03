@@ -11,7 +11,7 @@ from multiprocessing import Process
 
 def run_dqn_model(model_type, seed, steps):
     dir_name = f'seed_{seed}_{steps}'
-    parent_dir = f'../models/synthetic/{model_type}' # to change
+    parent_dir = f'../models/rwd_trained/{model_type}'
     path = os.path.join(parent_dir, dir_name)
     os.mkdir(path)
   
@@ -56,9 +56,11 @@ if __name__ == '__main__':
     print(f'Number of steps: {args.steps}')
 
 
+    try:
+        train_df = pd.read_csv('../data/rwd_dataset/train_set.csv')
+    except:
+        print("Dataset not publicly available. Swith path to synthetic dataset to test script.")
 
-    train_df = pd.read_csv('../data/synthetic_dataset/new_new/train_set.csv') # to change
-    # train_df = utils.remove_no_anems(train_df, 1/2)
     train_df = train_df.fillna(-1)
 
     X_train = train_df.iloc[:, 0:-1]
