@@ -39,7 +39,7 @@ def run_dqn_model(model_type, seed, steps):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Parameters for dqn model')
     parser.add_argument('-t', '--steps', help='Number of timesteps to train the model', type=int, default=int(50e6))
-    parser.add_argument('-s', '--seed', help='Seed to use in experiment', type=int)
+    parser.add_argument('-s', '--seed', help='Seed to use in experiment', type=int, default=42)
     args = parser.parse_args()
     constants.init(args)
 

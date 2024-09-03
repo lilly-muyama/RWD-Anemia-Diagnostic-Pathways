@@ -16,9 +16,9 @@ warnings.filterwarnings('ignore')
 
 if __name__== "__main__":
     parser = argparse.ArgumentParser(description = 'Parameters for dqn model')
-    parser.add_argument('-s', '--seed', help='Seed to use in experiment', type=int)
+    parser.add_argument('-s', '--seed', help='Seed to use in experiment', type=int, default=42)
     parser.add_argument('-t', '--steps', help='Number of timesteps', type=int, default=int(5e7))
-    parser.add_argument('-m', '--metric', help='best or avg', type=str)
+    parser.add_argument('-m', '--metric', help='best or avg', type=str, default='f1')
     args = parser.parse_args()
     constants.init(args)
 
