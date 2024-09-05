@@ -205,14 +205,14 @@ def rf(X_train, y_train):
     '''
     Creates and trains a random forest model
     '''
-    rf = RandomForestClassifier(random_state=constants.SEED).fit(X_train, y_train)
+    rf = RandomForestClassifier(max_depth=20, min_samples_leaf=2, random_state=constants.SEED).fit(X_train, y_train)
     return rf
 
 def dt(X_train, y_train):
     '''
     Creates and trains a decision tree model
     '''
-    dt = DecisionTreeClassifier(criterion='entropy', random_state=constants.SEED).fit(X_train, y_train)
+    dt = DecisionTreeClassifier(min_samples_split=10, random_state=constants.SEED).fit(X_train, y_train)
     return dt
 
 
@@ -220,17 +220,9 @@ def xgb(X_train, y_train):
     '''
     Creates and trains an XGBoost model
     '''
-    xg = xgboost.XGBClassifier(random_state=constants.SEED).fit(X_train, y_train)
+    xg = xgboost.XGBClassifier(max_depth=10, n_estimators=200, learning_rate=0.01, random_state=constants.SEED).fit(X_train, y_train)
     return xg
 
-def svm(X_train, y_train):
-    '''
-    Creates and trains an SVM standard DQN model
-    '''
-    mmc = MinMaxScaler()
-    X_train_norm = mmc.fit_transform(X_train)
-    svm_model = SVC(kernel='poly', C=100, decision_function_shape='ovo', random_state=constants.SEED).fit(X_train_norm, y_train)
-    return svm_model, mmc
 
 def evaluate_sota_model(model, X_test, y_test, is_svm=False, mmc=None):
     '''
