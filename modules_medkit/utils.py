@@ -20,6 +20,21 @@ family_rules = FamilyDetector.load_rules("../rules/family_testing_rules.yml")
 negation_rules = NegationDetector.load_rules("../rules/negation_testing_rules.yml")
 hypothesis_rules = HypothesisDetector.load_rules("../rules/hypothesis_testing_rules.yml")
 
+def get_final_entities(entities):
+    if len(entities) ==0:
+        return []
+    else:
+        entities_not_to_use = []
+        for entity in entities:
+            section_attr = entity.attrs.get(label="section")[0].value
+            family_attr = entity.attrs.get(label="family")[0].value
+            negation_attr = entity.attrs.get(label="negation")[0].value
+            hypothesis_attr = entity.attrs.get(label="hypothesis")[0].value
+            if ((family_attr) | (negation_attr)) | (hypothesis_attr):
+                entities_not_to_use.append(entity)
+        entities_to_use = [entity for entity in entities if entity not in entities_not_to_use]
+        return entities_to_use 
+
 def define_pipeline(section_dict):
     modified_sect_tokenizer = ModifiedSectionTokenizer(section_dict=section_dict, output_label="section")
     sentence_tokenizer = SentenceTokenizer(output_label="sentence", keep_punct=True, split_on_newlines=True, attrs_to_copy=["section"])
